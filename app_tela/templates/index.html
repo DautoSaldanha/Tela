@@ -11,7 +11,8 @@
     <h1>Cadastro de Usuário</h1>
 
     <form method="post" action="#" class="form-card" novalidate>
-      <label>
+      {% csrf_token %}
+        <label>
         Nome
         <input type="text" name="name" placeholder="Seu nome" required>
       </label>
@@ -21,13 +22,37 @@
         <input type="email" name="email" placeholder="seu@exemplo.com" required>
       </label>
 
-      <label>
-        Idade
-        <input type="number" name="age" min="0" placeholder="0" required>
-      </label>
+      {% if usuario_existente %}
+        <p class="error">{{ usuario_existente }}</p>
+      {% endif %}
 
       <button type="submit" class="btn">Cadastrar</button>
     </form>
+
+    <!-- Lista de usuários -->
+    <section class="users-section">
+      <h2>Usuários cadastrados</h2>
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if usuarios %}
+            {% for u in usuarios %}
+              <tr>
+                <td>{% if u.get_full_name %}{{ u.get_full_name }}{% else %}{{ u.username }}{% endif %}</td>
+                <td>{{ u.email }}</td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr><td colspan="2" class="muted">Nenhum usuário cadastrado.</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </section>
   </main>
 </body>
 </html>
