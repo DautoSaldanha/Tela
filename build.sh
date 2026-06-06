@@ -1,4 +1,5 @@
 echo "Starting build script"
 pip install -r requirements.txt
+python3 manage.py migrate --noinput
 python3 manage.py collectstatic --noinput
 echo "Build script completed"
