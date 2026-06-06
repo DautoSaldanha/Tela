@@ -1,16 +1,10 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "Tela/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
-    }
+    { "src": "api/wsgi.py", "use": "@vercel/python", "config": { "runtime": "python3.12" } }
   ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "Tela/wsgi.py"
-    }
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/(.*)", "dest": "api/wsgi.py" }
   ]
 }
